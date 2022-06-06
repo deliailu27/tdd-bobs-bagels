@@ -1,10 +1,3 @@
-
-
-
-
-
-
-
 class basket {
     constructor () {
         
@@ -13,54 +6,56 @@ class basket {
         this.maximum = 10
         this.totalQuantity = 0
         this.sum=0
-        this.bagelPrice = {
-            'Plain Bagel':4,
-            'Everything Bagel':6,
-            'Poppy seed Bagel':5,
-
-        }
+        this.sku = [
+            {'sku':'BGLO', 'name':'Bagel','Variant':'Onion','Price':.49},
+            {'sku':'BGLP','name':'Bagel','Variant':'Plain','Price':.39},
+            {'sku':'BGLE','name':'Bagel','Variant':'Everything','Price':.49},
+            {'sku':'COF','name':'Coffee','Variant':'','Price':.99}
+        ]
         this.totalPrice = 0
        
     }
 
-    addBagel (quantity,type) {
-        const bagel ={
-            id:this.id++,
-            quantity: quantity,
-            type: type 
+    addBagel (sku, quantity) {
+        if (quantity+this.items.length>this.maximum){
+            return "Too many bagels!"
         }
 
-        this.items.push(bagel)
-        this.totalQuantity += quantity
+        const existingItem = this.items.find (item => item.sku === sku)
 
-        if (this.totalQuantity<=this.maximum) {
-            return this.items
+        if (existingItem) {
+            existingItem.quantity += quantity
         }
-        else {return 'Too many bagels!'}
+        else {
+            this.items.push({'sku':sku,'quantity':quantity})
+        }
+
+        return this.items
          
     }
 
-    removeBagel (removeID) {
-        let findBagel = this.items.find (bagel=> bagel.id ===removeID)
-        if (!findBagel){
-            return "Item doesn't exist"
+    removeBagel (removeSku, quantity) {
+        if (!(removeSku in this.items)) {
+            return 'Item doesn\'t exist'
         }
-        else return this.items.splice (removeID--,1)
     }
 
     addMoreBagel (capacity) {
         this.totalQuantity +=capacity
 
-        return this.capacity
+        return this.totalQuantity
     }
 
-    showPrice (type) {
-        return this.bagelPrice[type] 
+    getItemPrice (sku) {
+       const item = this.sku.find(value => value['sku']===sku)
+       return item
     }
 
-    totalPrice() {
-        for (let i=0;i<this.id;i++){
-        this.totalPrice += this.bagelPrice[this.items[i].type]*this.items[i].quantity
+    gettotalPrice() {
+        
+        
+        for (let i=0;i<this.items.length;i++){
+        this.totalPrice += this.bagelPrice[this.items[i].type]*this.items[i].quantity;
         }
         return this.totalPrice
     }
@@ -69,6 +64,8 @@ class basket {
 
 }
 
+//const Basket=new basket 
+//console.log (Basket.showItemPrice('BGLO'))
 
 
 
