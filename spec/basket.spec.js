@@ -77,6 +77,17 @@ describe ('basket',()=> {
         expect(result).toEqual(expected)
     })
 
+    it('print receipt',()=>{
+        const Basket = new basket()
+        Basket.addBagel ('BGLO',2)
+        Basket.addBagel ('BGLP',1)
+
+        const expected= [ 'Onion Bagel 2 £0.98', 'Plain Bagel 1 £0.39' ]
+        const result=Basket.printReceipt()
+        
+        expect(result).toEqual(expected)
+    })
+
 
 }
 

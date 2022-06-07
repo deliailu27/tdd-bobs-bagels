@@ -58,14 +58,31 @@ class basket {
     }
 
     gettotalPrice() {
-        
-        
         for (let i=0;i<this.items.length;i++){
         let price = this.sku.find(item => item['sku'] === this.items[i].sku)['Price']
         this.totalPrice += price*this.items[i].quantity;
         }
         return this.totalPrice
     }
+
+
+  printReceipt() {
+
+        let priceList =[]
+        for (let i=0; i<this.items.length;i++){
+        let price = this.sku.find(item => item['sku'] === this.items[i].sku)['Price']
+        let name = this.sku.find(item=>item['sku']===this.items[i].sku)['name']
+        let variant = this.sku.find(item=>item['sku']===this.items[i].sku)['Variant']
+        let listItem = variant+' '+name+' '+this.items[i].quantity+' '+'£'+price*this.items[i].quantity
+        
+
+        priceList.push(listItem)
+    }
+
+    return priceList
+
+    }
+
 
 
 
