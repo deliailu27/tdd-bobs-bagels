@@ -13,12 +13,12 @@ describe ('basket',()=> {
 
     })
 
-    it ('remove bagel',()=>{
+    it ('remove bagel incorrect quantity',()=>{
         const Basket = new basket()
-        Basket.addBagel()
+        Basket.addBagel('BGLO',1)
 
-        const expected = []
-        const result = Basket.removeBagel(1)
+        const expected = "incorrect quantity"
+        const result = Basket.removeBagel('BGLO',2)
 
         expect(result).toEqual(expected)
     })
@@ -68,10 +68,10 @@ describe ('basket',()=> {
 
     it ('check out',()=> {
         const Basket = new basket()
-        Basket.addBagel (2,'Plain Bagel')
-        Basket.addBagel (1,'Poppy seed Bagel')
+        Basket.addBagel ('BGLO',1)
+        Basket.addBagel ('BGLP',1)
 
-        const expected = 13
+        const expected = .88
         const result = Basket.gettotalPrice()
 
         expect(result).toEqual(expected)

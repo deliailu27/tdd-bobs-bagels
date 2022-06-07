@@ -21,7 +21,7 @@ class basket {
             return "Too many bagels!"
         }
 
-        const existingItem = this.items.find (item => item.sku === sku)
+        const existingItem = this.items.find(item => item['sku'] === sku)
 
         if (existingItem) {
             existingItem.quantity += quantity
@@ -34,10 +34,16 @@ class basket {
          
     }
 
-    removeBagel (removeSku, quantity) {
-        if (!(removeSku in this.items)) {
+    removeBagel (removeSku, removeQuantity) {
+        const removeItem = this.items.find(item => item['sku'] === removeSku)
+        if (!removeItem) {
             return 'Item doesn\'t exist'
         }
+        if (removeQuantity < removeItem.quantity) {removeItem.quantity -= removeQuantity}
+        else if (removeQuantity > removeItem.quantity) {return 'incorrect quantity'}
+        else if (removeQuantity=removeItem.quantity) (this.items.indexOf(removeSku)!== -1 && this.items.splice(this.items.indexOf(removeSku),1))
+
+        return this.items
     }
 
     addMoreBagel (capacity) {
@@ -55,7 +61,8 @@ class basket {
         
         
         for (let i=0;i<this.items.length;i++){
-        this.totalPrice += this.bagelPrice[this.items[i].type]*this.items[i].quantity;
+        let price = this.sku.find(item => item['sku'] === this.items[i].sku)['Price']
+        this.totalPrice += price*this.items[i].quantity;
         }
         return this.totalPrice
     }
